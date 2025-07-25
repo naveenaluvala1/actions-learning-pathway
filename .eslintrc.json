@@ -1,6 +1,15 @@
 {
   "extends": ["next/core-web-vitals"],
   "rules": {
-    // customize your rules here
-  }
+    // Add custom rules here if needed
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx"],
+      "linterOptions": {
+        "reportUnusedDisableDirectives": true
+      }
+    }
+  ]
 }
+
