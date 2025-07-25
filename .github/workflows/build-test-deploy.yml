@@ -1,26 +1,41 @@
 name: build-test-deploy
 on: push
+
 jobs: 
   build:
     runs-on: ubuntu-latest
     steps: 
       - name: checkout repo
         uses: actions/checkout@v3
+
       - name: use node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: npm install
-      - run: npm run build 
+
+      - name: install dependencies
+        run: npm install
+
+      - name: build the app
+        run: npm run build 
+
   test: 
     needs: build
     runs-on: ubuntu-latest
     steps: 
       - name: checkout repo
         uses: actions/checkout@v3
+
       - name: use node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: npm install
-      - run: npm test
+
+      - name: install dependencies (again for isolation)
+        run: npm install
+
+      - name: install ESLint
+        run: npm install --save-dev eslint
+
+      - name: run tests (includes linting)
+        run: npm test
